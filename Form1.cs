@@ -25,54 +25,26 @@ namespace lw_part1
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (!isCTRL)
-                {
-                    bool isClicked = false;
-                    if (ctrlChckBx.Checked == false)
-                    {
-                        for (int i = 0; i < list.Count; i++)
-                            list[i].isDedicated = false;
-                    }
+                bool isClicked = false;
+                if (!isCTRL || !ctrlChckBx.Checked)
                     for (int i = 0; i < list.Count; i++)
                         list[i].isDedicated = false;
-                    for (int i = 0; i < list.Count; i++)
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i].isChoose(e.X, e.Y))
                     {
-                        if (list[i].isChoose(e.X, e.Y))
-                        {
-                            list[i].isDedicated = true;
-                            isClicked = true;
-                            if (!CrossChckBx.Checked)
-                                break;
-                        }
-                    }
-                    if (!isClicked)
-                    {
-                        list.Add(new CCirle(e.X, e.Y));
-                        list[list.Count - 1].isDedicated = true;
+                        list[i].isDedicated = true;
+                        isClicked = true;
+                        if (!CrossChckBx.Checked)
+                            break;
                     }
                 }
-                else 
+
+                if (!isClicked)
                 {
-                    if (ctrlChckBx.Checked == false)
-                    {
-                        for (int i = 0; i < list.Count; i++)
-                            list[i].isDedicated = false;
-                    }
-                    bool isClicked = false;
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list[i].isChoose(e.X, e.Y))
-                        {
-                            list[i].isDedicated = true;
-                            isClicked = true;
-                            if (!CrossChckBx.Checked)
-                                break;
-                        }
-                    }
-                    if (!isClicked)
-                    {
-                        list.Add(new CCirle(e.X, e.Y));
-                    }
+                    list.Add(new CCirle(e.X, e.Y));
+                    list[list.Count - 1].isDedicated = true;
                 }
             }
             panel1.Invalidate();
